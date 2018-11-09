@@ -1,7 +1,6 @@
 {
   "name": "yahevin__npm",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/WebHeroSchool/Yahevin__npm/issues"
   },
-  "homepage": "https://github.com/WebHeroSchool/Yahevin__npm#readme"
+  "homepage": "https://github.com/WebHeroSchool/Yahevin__npm#readme",
+  "description": "",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
 }
