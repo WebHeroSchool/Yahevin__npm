@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/WebHeroSchool/Yahevin__npm/issues"
   },
-  "homepage": "https://github.com/WebHeroSchool/Yahevin__npm#readme"
+  "homepage": "https://github.com/WebHeroSchool/Yahevin__npm#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0"
+  }
 }
