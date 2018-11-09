@@ -1,0 +1,25 @@
+{
+  "name": "yahevin__npm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "hi": "node index.js",
+    "create": "MD build",
+    "delete": "rm -rf build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebHeroSchool/Yahevin__npm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WebHeroSchool/Yahevin__npm/issues"
+  },
+  "homepage": "https://github.com/WebHeroSchool/Yahevin__npm#readme",
+  "description": "",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
