@@ -1,0 +1,1 @@
+"use strict";console.log("hello");var x=1;console.log("by");x=5;
