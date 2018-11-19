@@ -5,23 +5,44 @@ const uglify = require('gulp-uglify');
 const cssnano = require('gulp-cssnano');
 const sourcemaps = require('gulp-sourcemaps');
 
+const path = {
+	src: {
+		script: 'scripts/*.js',
+		style: 'styles/*.css'
+	},
+	buildFolder: {
+		script: 'build/js',
+		style: 'build/css'
+	},
+	buildName: {
+		script: 'index.min.js',
+		style: 'index.min.css'
+	}
+}
+
 gulp.task('buildJs', () => {
-	return gulp.src(['scripts/*.js'])
+	return gulp.src([path.src.script])
 		.pipe(sourcemaps.init())
 			.pipe(babel({
-	            presets: ['@babel/env']
-	        }))
-	        .pipe(concat('all.js'))
+	            presets: ['@babel/env']}))
+	        .pipe(concat(path.buildName.script))
 	        .pipe(uglify())
 	    .pipe(sourcemaps.write())
-		.pipe(gulp.dest('build/js'));
+		.pipe(gulp.dest(path.buildFolder.script));
 	});
 gulp.task('buildCss', () => {
-	return gulp.src(['styles/*.css'])
+	return gulp.src([path.src.style])
 		.pipe(sourcemaps.init())
-			.pipe(concat('all.css'))
+			.pipe(concat(path.buildName.style))
 			.pipe(cssnano())
 		.pipe(sourcemaps.write())
-		.pipe(gulp.dest('build/css'));
+		.pipe(gulp.dest(path.buildFolder.style));
 	});
 gulp.task('build', ['buildCss','buildJs']);
+
+gulp.task('watchFor', function () {
+	gulp.watch('scripts/*.js', ['build']);
+	gulp.watch('styles/*.css', ['build']);
+})
+
+
