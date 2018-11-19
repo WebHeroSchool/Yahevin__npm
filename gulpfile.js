@@ -50,3 +50,6 @@ gulp.task('browser-sync', function() {
     gulp.watch(path.src.script, ['build', () => browserSync.reload ()]);
 	gulp.watch(path.src.style, ['build', () => browserSync.reload ()]);
 });
+
+gulp.task('dev', ['build','browser-sync']);
+gulp.task('prod', ['build']);
