@@ -9,6 +9,12 @@ const postcss = require('gulp-postcss');
 const cssnano = require('gulp-cssnano');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
+const postcssPresetEnv = require('postcss-preset-env');
+const postcssShort = require('postcss-short');
+const autoprefixer = require('autoprefixer');
+const nested = require('postcss-nested');
+const assets = require('postcss-assets');
+
 
 const path = {
 	src: {
@@ -41,7 +47,17 @@ gulp.task('buildJs', () => {
 		.pipe(gulp.dest(path.buildFolder.script))
 	});
 gulp.task('buildCss', () => {
-	const plugins = [];
+	const plugins = [
+		postcssPresetEnv,
+		nested,
+		assets({
+    		loadPaths: ['images/']
+    	}),
+		postcssShort({ skip: '-' }),
+		autoprefixer({
+			browsers: ['last 2 version']
+		}),
+	];
 	return gulp.src([path.src.style])
 		.pipe(sourcemaps.init())
 			.pipe(concat(path.buildName.style))
