@@ -5,6 +5,7 @@ const babel = require('gulp-babel');
 const clean = require('gulp-clean');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
+const postcss = require('gulp-postcss');
 const cssnano = require('gulp-cssnano');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
@@ -40,11 +41,13 @@ gulp.task('buildJs', () => {
 		.pipe(gulp.dest(path.buildFolder.script))
 	});
 gulp.task('buildCss', () => {
+	const plugins = [];
 	return gulp.src([path.src.style])
 		.pipe(sourcemaps.init())
 			.pipe(concat(path.buildName.style))
 			.pipe(gulpif(process.env.NODE_ENV === 'production',cssnano()))
 		.pipe(sourcemaps.write())
+		.pipe(postcss(plugins))
 		.pipe(gulp.dest(path.buildFolder.style));
 	});
 gulp.task('build', ['buildCss','buildJs']);
