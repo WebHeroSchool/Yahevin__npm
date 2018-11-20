@@ -5,9 +5,16 @@ const babel = require('gulp-babel');
 const clean = require('gulp-clean');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
+const postcss = require('gulp-postcss');
 const cssnano = require('gulp-cssnano');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
+const postcssPresetEnv = require('postcss-preset-env');
+const postcssShort = require('postcss-short');
+const autoprefixer = require('autoprefixer');
+const nested = require('postcss-nested');
+const assets = require('postcss-assets');
+
 
 const path = {
 	src: {
@@ -40,11 +47,23 @@ gulp.task('buildJs', () => {
 		.pipe(gulp.dest(path.buildFolder.script))
 	});
 gulp.task('buildCss', () => {
+	const plugins = [
+		postcssPresetEnv,
+		nested,
+		assets({
+    		loadPaths: ['images/']
+    	}),
+		postcssShort({ skip: '-' }),
+		autoprefixer({
+			browsers: ['last 2 version']
+		}),
+	];
 	return gulp.src([path.src.style])
 		.pipe(sourcemaps.init())
 			.pipe(concat(path.buildName.style))
 			.pipe(gulpif(process.env.NODE_ENV === 'production',cssnano()))
 		.pipe(sourcemaps.write())
+		.pipe(postcss(plugins))
 		.pipe(gulp.dest(path.buildFolder.style));
 	});
 gulp.task('build', ['buildCss','buildJs']);
