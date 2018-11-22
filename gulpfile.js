@@ -16,7 +16,9 @@ const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
 const assets = require('postcss-assets');
 const rename = require("gulp-rename");
-const glob = require("glob")
+const glob = require("glob");
+
+const context = require('./src/data.json');
 
 
 const path = {
@@ -50,7 +52,7 @@ gulp.task('compile', () => {
 			batch: items = files.map( item => item.slice(0,item.lastIndexOf('/')))
 		}
 		gulp.src(`${path.src.dir}/index.hbs`)
-		.pipe(handlebars({}, options))
+		.pipe(handlebars(context, options))
 		.pipe(rename('index.html'))
 		.pipe(gulp.dest(path.buildFolder.dir));
 	});	
