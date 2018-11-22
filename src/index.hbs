@@ -3,18 +3,21 @@
 <head>
 	<meta charset="utf-8">
 	<title>Yahevin__study</title>
-	<link rel="stylesheet" href="build/css/index.min.css"">
+	<link rel="stylesheet" href="css/index.min.css"">
 </head>
 <body>
 	<h1>Hello {{firstName}}</h1>
 
 	{{> header}}
-
-	{{> side}}
+	{{#with hobby}}
+		<p>My hobbyes are: {{firstHobby}} and {{secondHobby}}</p>	
+	{{/with}}
+	
+	<p>{{#bold}}{{> side}}{{/bold}}
 
 	{{> footer}}
 
-	<script type="text/javascript" async src="build/js/index.min.js"></script>
+	<script type="text/javascript" async src="js/index.min.js"></script>
 </body>
 
 </html>

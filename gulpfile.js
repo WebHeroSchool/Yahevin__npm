@@ -10,7 +10,7 @@ const cssnano = require('gulp-cssnano');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 const postcssPresetEnv = require('postcss-preset-env');
-const handlebars = require('gulp-compile-handlebars');
+const Handlebars = require('gulp-compile-handlebars');
 const postcssShort = require('postcss-short');
 const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
@@ -49,10 +49,16 @@ gulp.task('compile', () => {
 		console.log(files)
 		const options = {
 			ignorePartials: true,
-			batch: items = files.map( item => item.slice(0,item.lastIndexOf('/')))
+			batch: items = files.map( item => item.slice(0,item.lastIndexOf('/'))),
+			helpers: {
+				with: (context,options) => options.fn(context),
+				bold: (options) => '<div class="mybold">'+ options.fn(this)+'</div>'
+		
+			}			
 		}
+		
 		gulp.src(`${path.src.dir}/index.hbs`)
-		.pipe(handlebars(context, options))
+		.pipe(Handlebars(context, options))
 		.pipe(rename('index.html'))
 		.pipe(gulp.dest(path.buildFolder.dir));
 	});	
@@ -81,8 +87,8 @@ gulp.task('buildCss', () => {
 	];
 	return gulp.src([path.src.style])
 		.pipe(sourcemaps.init())
-			.pipe(concat(path.buildName.style))
-			.pipe(gulpif(process.env.NODE_ENV === 'production',cssnano()))
+		.pipe(concat(path.buildName.style))
+		.pipe(gulpif(process.env.NODE_ENV === 'production',cssnano()))
 		.pipe(sourcemaps.write())
 		.pipe(postcss(plugins))
 		.pipe(gulp.dest(path.buildFolder.style));
