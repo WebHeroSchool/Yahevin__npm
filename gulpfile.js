@@ -11,15 +11,19 @@ const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 const postcssPresetEnv = require('postcss-preset-env');
 const Handlebars = require('gulp-compile-handlebars');
+const gulpStylelint = require('gulp-stylelint');
 const postcssShort = require('postcss-short');
+const reporter = require('postcss-reporter');
 const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
 const assets = require('postcss-assets');
+const stylelint = require('stylelint');
 const rename = require("gulp-rename");
 const eslint = require('gulp-eslint');
 const glob = require("glob");
 
-const context = require('./src/data.json');
+
+
 
 
 const path = {
@@ -40,9 +44,14 @@ const path = {
 	templates: 'src/templates/**/*.hbs',
 	lint: {
 		scripts: ['src/**/*.js','!node_modules/**','build/**'],
-		rule: 'src/rules.json'
+		styles : ['src/**/*.css','!node_modules/**','build/**'],
+
+
 	}
 }
+const context = require('./src/data.json');
+const styleRules = require('./src/StyleRules.json');
+const ESRule = require('./src/ESRules.json');
 
 env({
     file: 'src/env.json',
@@ -51,10 +60,22 @@ env({
 
 gulp.task('eslint', () => {
 	gulp.src(path.lint.scripts)
-	.pipe(eslint(path.lint.rule))
+	.pipe(eslint(ESRule))
 	.pipe(eslint.format())
 });
 
+gulp.task('styleLint', () => {
+  	gulp.src(path.lint.styles)
+    .pipe(postcss([
+    	stylelint(styleRules),
+    	reporter({
+    		clearMessages: true,
+    		throwError: false
+    	})
+    	]))
+});
+
+gulp.task('lint', ['styleLint','eslint']);
 
 gulp.task('compile', () => {
 	glob(path.templates, function(err, files) {

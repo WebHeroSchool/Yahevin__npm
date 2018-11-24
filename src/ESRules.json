@@ -1,0 +1,29 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "rules": {
+        "semi": 2,
+        "quotes": 1,
+        "curly": 2,
+        "no-unused-expressions": "off",
+        "indent": ["error", 2],
+        "strict": "off",
+        "switch-colon-spacing": "off",
+        "symbol-description": "off",
+        "template-curly-spacing": "off",
+        "template-tag-spacing": "off",
+        "unicode-bom": "off",
+        "use-isnan": "error",
+        "valid-jsdoc": "off",
+        "valid-typeof": "error",
+        "vars-on-top": "off",
+        "wrap-iife": "off",
+        "wrap-regex": "off",
+        "yield-star-spacing": "off"
+    }
+}
