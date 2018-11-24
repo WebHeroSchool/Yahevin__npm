@@ -10,25 +10,33 @@ const cssnano = require('gulp-cssnano');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 const postcssPresetEnv = require('postcss-preset-env');
+const Handlebars = require('gulp-compile-handlebars');
 const postcssShort = require('postcss-short');
 const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
 const assets = require('postcss-assets');
+const rename = require("gulp-rename");
+const glob = require("glob");
+
+const context = require('./src/data.json');
 
 
 const path = {
 	src: {
-		script: 'scripts/*.js',
-		style: 'styles/*.css'
+		dir: 'src',
+		script: 'src/scripts/*.js',
+		style: 'src/styles/*.css'
 	},
 	buildFolder: {
+		dir: 'build',
 		script: 'build/js',
 		style: 'build/css'
 	},
 	buildName: {
 		script: 'index.min.js',
 		style: 'index.min.css'
-	}
+	},
+	templates: 'src/templates/**/*.hbs'
 }
 
 env({
@@ -36,6 +44,24 @@ env({
     type: 'ini'
 });
 
+gulp.task('compile', () => {
+	glob(path.templates, function(err, files) {
+		const options = {
+			ignorePartials: true,
+			batch: items = files.map( item => item.slice(0,item.lastIndexOf('/'))),
+			helpers: {
+				with: (context,options) => options.fn(context),
+				bold: (options) => '<div class="mybold">'+ options.fn(this)+'</div>'
+		
+			}			
+		}
+		
+		gulp.src(`${path.src.dir}/index.hbs`)
+		.pipe(Handlebars(context, options))
+		.pipe(rename('index.html'))
+		.pipe(gulp.dest(path.buildFolder.dir));
+	});	
+});
 gulp.task('buildJs', () => {
 	return gulp.src([path.src.script])
 		.pipe(sourcemaps.init())
@@ -60,8 +86,8 @@ gulp.task('buildCss', () => {
 	];
 	return gulp.src([path.src.style])
 		.pipe(sourcemaps.init())
-			.pipe(concat(path.buildName.style))
-			.pipe(gulpif(process.env.NODE_ENV === 'production',cssnano()))
+		.pipe(concat(path.buildName.style))
+		.pipe(gulpif(process.env.NODE_ENV === 'production',cssnano()))
 		.pipe(sourcemaps.write())
 		.pipe(postcss(plugins))
 		.pipe(gulp.dest(path.buildFolder.style));
