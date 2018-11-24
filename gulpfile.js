@@ -16,6 +16,7 @@ const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
 const assets = require('postcss-assets');
 const rename = require("gulp-rename");
+const eslint = require('gulp-eslint');
 const glob = require("glob");
 
 const context = require('./src/data.json');
@@ -36,13 +37,24 @@ const path = {
 		script: 'index.min.js',
 		style: 'index.min.css'
 	},
-	templates: 'src/templates/**/*.hbs'
+	templates: 'src/templates/**/*.hbs',
+	lint: {
+		scripts: ['src/**/*.js','!node_modules/**','build/**'],
+		rule: 'src/rules.json'
+	}
 }
 
 env({
-    file: 'env.json',
+    file: 'src/env.json',
     type: 'ini'
 });
+
+gulp.task('eslint', () => {
+	gulp.src(path.lint.scripts)
+	.pipe(eslint(path.lint.rule))
+	.pipe(eslint.format())
+});
+
 
 gulp.task('compile', () => {
 	glob(path.templates, function(err, files) {
