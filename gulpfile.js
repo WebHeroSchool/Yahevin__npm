@@ -46,7 +46,6 @@ env({
 
 gulp.task('compile', () => {
 	glob(path.templates, function(err, files) {
-		console.log(files)
 		const options = {
 			ignorePartials: true,
 			batch: items = files.map( item => item.slice(0,item.lastIndexOf('/'))),
