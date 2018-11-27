@@ -2,12 +2,16 @@
   "name": "yahevin__npm",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "test": "gulp lint",
+  "scripts": {  
+  	"test": "gulp lint",
     "hi": "node index.js",
     "start": "gulp dev",
-    "build": "gulp prod"
+    "build": "gulp prod",
+    "prepush": "npm run test"
   },
+  "prepush": [
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WebHeroSchool/Yahevin__npm.git"
@@ -28,6 +32,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.0",
+    "ghooks": "^2.0.4",
     "glob": "^7.1.3",
     "gulp-babel": "^8.0.0",
     "gulp-clean": "^0.4.0",
@@ -43,6 +48,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-stylelint": "^8.0.0",
     "gulp-uglify": "^3.0.1",
+    "husky": "^1.2.0",
     "npm-scripts": "^1.4.0",
     "postcss-assets": "^5.0.0",
     "postcss-nested": "^4.1.0",
