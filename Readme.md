@@ -1,22 +1,20 @@
-#Workflow for building web application
+h1 Workflow for building web application
 ***
-<li>
-*Handelbars
-*PostCSS
-	<li>
-	*Assets
-	*Nested
-	*Sorting
-	*Short
-	*StyleLint
-	*Reporter
-	*Autoprefixer
-	</li>
-*ESLint
-*Gulp
-*Browser-sync
+<li>*Handelbars
+<li>*PostCSS
+	<li><li>
+	<li><li>*Assets
+	<li><li>*Nested
+	<li><li>*Sorting
+	<li><li>*Short
+	<li><li>*StyleLint
+	<li><li>*Reporter
+	<li><li>*Autoprefixer
+<li>*ESLint
+<li>*Gulp
+<li>*Browser-sync
 ```
-##Global dependencies
+h2 Global dependencies
 <hr>
 You must have installed: `node`, `npm`, `gulp`.
 <hr>
