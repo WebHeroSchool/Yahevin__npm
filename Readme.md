@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-# Workflow for building web application
-***
-- Handelbars
-- PostCSS
-	- Assets
-    - Nested
-     - Sorting
-     - Short
-     - StyleLint
-     - Reporter
-     - Autoprefixer
- - ESLint
- - Gulp
- - Browser-sync
-```
-## Global dependencies
-=======
 h1 Workflow for building web application
 ***
 <li>*Handelbars
@@ -33,11 +15,9 @@ h1 Workflow for building web application
 <li>*Browser-sync
 ```
 h2 Global dependencies
->>>>>>> cbcfaa1d9b5fe10a40a3ffe5b0f020e4df3d5547
 <hr>
 You must have installed: `node`, `npm`, `gulp`.
 <hr>
 
-## Project structure
+##Project structure
 <hr>
-<li>
