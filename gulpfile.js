@@ -45,9 +45,10 @@ const path = {
 	lint: {
 		scripts: ['src/**/*.js','!node_modules/**','build/**'],
 		styles : ['src/**/*.css','!node_modules/**','build/**'],
-
-
-	}
+	},
+	contextJson: 'src/data.json',
+	fonts: 'src/fonts',
+	assets: 'src/assets'
 }
 const context = require('./src/data.json');
 const styleRules = require('./src/StyleRules.json');
@@ -72,7 +73,7 @@ gulp.task('styleLint', () => {
     		clearMessages: true,
     		throwError: false
     	})
-    	]))
+    ]))
 });
 
 gulp.task('lint', ['styleLint','eslint']);
@@ -84,11 +85,9 @@ gulp.task('compile', () => {
 			batch: items = files.map( item => item.slice(0,item.lastIndexOf('/'))),
 			helpers: {
 				with: (context,options) => options.fn(context),
-				bold: (options) => '<div class="mybold">'+ options.fn(this)+'</div>'
-		
+				bold: (options) => '<div class="mybold">'+ options.fn(this)+'</div>'		
 			}			
-		}
-		
+		}		
 		gulp.src(`${path.src.dir}/index.hbs`)
 		.pipe(Handlebars(context, options))
 		.pipe(rename('index.html'))
@@ -125,7 +124,25 @@ gulp.task('buildCss', () => {
 		.pipe(postcss(plugins))
 		.pipe(gulp.dest(path.buildFolder.style));
 	});
-gulp.task('build', ['buildCss','buildJs']);
+
+gulp.task('fonts', () => {
+    gulp.src(path.fonts)
+        .pipe(filter(['*.woff', '*.woff2']))
+        .pipe(gulp.dest(`${paths.buildFolder}/fonts`));
+});
+
+gulp.task('assets', () => {
+    glob(paths.assets, (err, files) => {
+        if (!err) {
+            gulp.src(files)
+                .pipe(gulp.dest(`${paths.buildFolder}/assets`));
+        } else {
+            throw err;
+        }
+    });
+});
+
+gulp.task('build', ['buildCss','buildJs','assets','fonts']);
 
 gulp.task('browser-sync', function() {
     browserSync.init({
@@ -133,14 +150,20 @@ gulp.task('browser-sync', function() {
             baseDir: "./"
         }
     });
-    gulp.watch(path.src.script, ['build', () => browserSync.reload ()]);
-	gulp.watch(path.src.style, ['build', () => browserSync.reload ()]);
+    gulp.watch(path.src.script, ['buildJs']);
+	gulp.watch(path.src.style, ['buildCss']);
+	gulp.watch(path.src.dir, ['compile']);
+	gulp.watch(path.contextJson)
+		.on('change',browserSync.reload);
+	gulp.watch(`${path.buildFolder}/**/*`)
+		.on('change',browserSync.reload);
+
 });
+
+gulp.task('dev', ['build','browser-sync']);
+gulp.task('prod', ['build']);
 
 gulp.task('clean', function () {
     return gulp.src('build/*', {read: false})
         .pipe(clean())
 });
-
-gulp.task('dev', ['build','browser-sync']);
-gulp.task('prod', ['build']);
