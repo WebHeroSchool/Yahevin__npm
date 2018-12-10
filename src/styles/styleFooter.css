@@ -1,7 +1,0 @@
-footer {
-	background-color: green;
-	width: 100%;
-	&__item {
-		color: green;
-	}
-}
