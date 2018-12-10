@@ -48,7 +48,7 @@ const path = {
 	fonts: 'src/fonts/*',
 	images: 'src/images/*'
 }
-// const context = require('./src/data.json');
+
 const styleRules = require('./src/StyleRules.json');
 const ESRule = require('./src/ESRules.json');
 const paths = ('/src/images/');
