@@ -12,7 +12,7 @@
  - ESLint
  - Gulp
  - Browser-sync
-```
+
 ## Global dependencies
 <hr>
 You must have installed: `node`, `npm`, `gulp`.
