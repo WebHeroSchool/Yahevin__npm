@@ -1,5 +1,5 @@
 # Workflow for building web application
-***
+
 - Handelbars
 - PostCSS
 	- Assets
@@ -14,9 +14,24 @@
  - Browser-sync
 
 ## Global dependencies
-<hr>
 You must have installed: `node`, `npm`, `gulp`.
 <hr>
 
 ## Project structure
-<hr>
+- `src`
+    - `assets`
+    - `fonts`
+    - `scripts`
+    - `styles`
+    - `templates`
+        - `footer`
+        - `header`
+        - `side`
+    - `StyleRules` /  stylilint rules
+    - `ESRULES` / eslint rules
+    - `env.json` / NODE_ENV file
+    - `data.json` / Handlebar context
+    - `index.hbs` / entry point
+- `build`
+ 
+
