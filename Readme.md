@@ -34,3 +34,11 @@ You must have installed: `node`, `npm`, `gulp`.
     - `index.hbs` / entry point
 - `build`
 
+## Download the project
+
+1. git clone //github.com/WebHeroSchool/Yahevin__npm.git
+2. cd Yahevin__npm
+3. npm install
+4. gulp prod
+
+ 
