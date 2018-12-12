@@ -40,7 +40,8 @@
 	background-repeat: no-repeat;
 	background-image: inline('cockpit.png');
 	@media (min-width: 1630px) {		
-		width: 79%;		
+		width: 79%;	
+		background-size: cover;	
 	}
 	@media (max-width: 1023px) {
 		width: 100%;
