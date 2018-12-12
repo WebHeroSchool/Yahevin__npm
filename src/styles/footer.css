@@ -1,0 +1,24 @@
+.footer {
+	position: relative;
+	float: right;
+	font-size: 8px;
+	z-index: 100;
+	margin: -43px 24px 0 0;
+	font-family: MontserratBold;
+	@media (max-width: 1023px) {
+		display: none;
+	}
+}
+.webHero {
+	font-size: 16px;
+	display: inline-block;
+	padding: 0 0 0 5px;
+	font-family: MontserratBold;
+	color: #FFD22E;
+}
+.school {
+	font-size: 9px;
+	float: right;
+	margin: -2px 1px 0 0;
+	font-family: MontserratBold;
+}

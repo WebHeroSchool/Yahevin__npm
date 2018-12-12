@@ -18,24 +18,22 @@ const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
 const assets = require('postcss-assets');
 const stylelint = require('stylelint');
-const rename = require("gulp-rename");
+const rename = require('gulp-rename');
 const eslint = require('gulp-eslint');
 const glob = require("glob");
-
-
-
-
 
 const path = {
 	src: {
 		dir: 'src',
-		script: 'src/scripts/*.js',
+		script: 'src/scrypts/*.js',
 		style: 'src/styles/*.css'
 	},
 	buildFolder: {
 		dir: 'build',
 		script: 'build/js',
-		style: 'build/css'
+		style: 'build/css',
+		images: 'build/images',
+		fonts: 'build/fonts'
 	},
 	buildName: {
 		script: 'index.min.js',
@@ -47,12 +45,20 @@ const path = {
 		styles : ['src/**/*.css','!node_modules/**','build/**'],
 	},
 	contextJson: 'src/data.json',
-	fonts: 'src/fonts',
-	assets: 'src/assets'
+	fonts: 'src/fonts/*',
+	images: 'src/images/*'
 }
-const context = require('./src/data.json');
+
 const styleRules = require('./src/StyleRules.json');
 const ESRule = require('./src/ESRules.json');
+const paths = ('/src/images/');
+const context = {
+	header: 'src/temlates/header/header.hbs',
+	undeMain: 'src/temlates/under_header/undeMain.hbs',
+	future: 'src/temlates/top_side/future.hbs',
+	security: 'src/temlates/bottom_side/security.hbs',
+	footer: 'src/temlates/footer/footer.hbs'
+};
 
 env({
     file: 'src/env.json',
@@ -82,14 +88,10 @@ gulp.task('compile', () => {
 	glob(path.templates, function(err, files) {
 		const options = {
 			ignorePartials: true,
-			batch: items = files.map( item => item.slice(0,item.lastIndexOf('/'))),
-			helpers: {
-				with: (context,options) => options.fn(context),
-				bold: (options) => '<div class="mybold">'+ options.fn(this)+'</div>'		
-			}			
+			batch: items = files.map( item => item.slice(0,item.lastIndexOf('/'))),		
 		}		
 		gulp.src(`${path.src.dir}/index.hbs`)
-		.pipe(Handlebars(context, options))
+		.pipe(Handlebars(context, options)) 
 		.pipe(rename('index.html'))
 		.pipe(gulp.dest(path.buildFolder.dir));
 	});	
@@ -97,10 +99,10 @@ gulp.task('compile', () => {
 gulp.task('buildJs', () => {
 	return gulp.src([path.src.script])
 		.pipe(sourcemaps.init())
-			.pipe(babel({
-	            presets: ['@babel/env']}))
-	        .pipe(concat(path.buildName.script))
-	        .pipe(gulpif(process.env.NODE_ENV === 'production',uglify()))
+		.pipe(babel({
+	        presets: ['@babel/env']}))
+	    .pipe(concat(path.buildName.script))
+	    .pipe(gulpif(process.env.NODE_ENV === 'production',uglify()))
 	    .pipe(sourcemaps.write())
 		.pipe(gulp.dest(path.buildFolder.script))
 	});
@@ -108,15 +110,17 @@ gulp.task('buildCss', () => {
 	const plugins = [
 		postcssPresetEnv,
 		nested,
-		assets({
-    		loadPaths: ['images/']
-    	}),
 		postcssShort({ skip: '-' }),
 		autoprefixer({
 			browsers: ['last 2 version']
-		}),
-	];
+			}),
+		],
+	processors = [			
+		assets({
+			loadPaths: ['../images', 'src/images']
+		})]
 	return gulp.src([path.src.style])
+		.pipe(postcss(processors))
 		.pipe(sourcemaps.init())
 		.pipe(concat(path.buildName.style))
 		.pipe(gulpif(process.env.NODE_ENV === 'production',cssnano()))
@@ -124,25 +128,17 @@ gulp.task('buildCss', () => {
 		.pipe(postcss(plugins))
 		.pipe(gulp.dest(path.buildFolder.style));
 	});
-
+gulp.task('images', () => {
+	return gulp.src(path.images)
+		 .pipe(gulp.dest(path.buildFolder.images));
+})
 gulp.task('fonts', () => {
-    gulp.src(path.fonts)
-        .pipe(filter(['*.woff', '*.woff2']))
-        .pipe(gulp.dest(`${paths.buildFolder}/fonts`));
+    return gulp.src(path.fonts)
+        .pipe(gulp.dest(path.buildFolder.fonts));
 });
 
-gulp.task('assets', () => {
-    glob(paths.assets, (err, files) => {
-        if (!err) {
-            gulp.src(files)
-                .pipe(gulp.dest(`${paths.buildFolder}/assets`));
-        } else {
-            throw err;
-        }
-    });
-});
+gulp.task('build', ['images','buildCss','buildJs','compile','fonts']);
 
-gulp.task('build', ['buildCss','buildJs','assets','fonts']);
 
 gulp.task('browser-sync', function() {
     browserSync.init({

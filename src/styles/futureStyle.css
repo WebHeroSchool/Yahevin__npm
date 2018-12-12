@@ -1,0 +1,189 @@
+.future {
+	display: block;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	height: 900px;
+	overflow: hiddden;
+	@media (max-width: 1023px) {
+		width: 100%;
+		height: auto;
+	}
+}
+.future__scroll {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 900px;
+	width: 200px;
+	opacity: 0;
+	&:hover {
+		opacity: 0.5;
+		background-color: #641229;
+	}
+	@media (max-width: 1023px) {
+		position: fixed;
+		z-index: 10;
+		height: 100%;
+	}
+}
+.future__imgBox {
+	display: block;
+	overflow: hidden;
+}
+.future__img {
+	margin: 56px 0 0 0;
+	z-index: -1;
+	width: 1273px;
+	height: 1100px;	
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-image: inline('cockpit.png');
+	@media (min-width: 1630px) {		
+		width: 79%;	
+		background-size: cover;	
+	}
+	@media (max-width: 1023px) {
+		width: 100%;
+		height: 66vw;
+		margin: 0;
+	}
+}
+.future__model_tittle {
+	z-index: 1;
+	position: absolute;
+	margin:0;
+	bottom: 750px;
+	left: 80px;
+	color: #E51937;
+	font-size: 70px;
+	line-height: 85px;
+	font-family: MontserratSemiBold;
+	@media (max-width: 1023px) {
+		display: none;
+	}
+}
+.future__aside {
+	position: absolute;
+	top:0;
+	right: 0;
+	width: 440px;
+	height: 900px;
+	background-color: #E51937;
+	color: #FFFFFF;
+	@media (max-width: 1023px) {
+		width: 100%;
+		position: relative;
+		display: inline-block;
+		margin: -16px 0 0 0;
+		height: 250px;
+		text-align: center;
+	}
+}
+.future__tittle {
+	text-align: center;
+	margin: 51px 72px 11px 52px;
+	font-size: 30px;
+	font-family: MontserratSemiBold;
+	line-height: 37px;
+	@media (max-width: 1023px) {
+		margin: 15px 33px 15px 26px;
+		padding-top: 18px;
+	}
+}
+.future__mainText {
+	margin: 0 72px 68px 52px;
+	font-size: 15px;
+	font-family: MontserratMedium;
+	@media (max-width: 1023px) {
+		margin: 0 120px 0 120px;
+		line-height: 19px;
+		text-align: justify;
+		padding-bottom: 34px;
+	}
+	br {
+		@media (max-width: 1023px) {
+			display: none;
+		}
+	}
+}
+.future__item {
+	margin: 0 0 35px 52px;
+	display: flex;
+	align-items: stretch;
+	@media (max-width: 1023px) {
+		display: none;
+	}
+}
+.future__svgA {
+	margin: 2px 0 0 0;
+}
+.future__svgB {
+	margin: 16px 4px 0 -4px;
+}
+.future__svgC {
+	margin: 3px 4px 0 0;
+}
+.future__text {
+	margin: -10px 0 0 19px;
+}
+.future__textOnlyMid  {
+	margin: -4px 0 0 19px;
+}
+.future_text_big {
+	font-size: 35px;
+	line-height: 43px;
+	font-family: MontserratSemiBold;
+}
+.future_text_mid {
+	font-size: 20px;
+	line-height: 0;
+	font-family: MontserratSemiBold;
+}
+.future_text_small {
+	display: block;
+	font-size: 12px;
+	line-height: 15px;
+	font-family: MontserratRegular;
+	margin: -1px 0 0 0;
+}
+.future__buttons {
+	margin: 136px 0 0 49px;
+	display: inline-flex;
+	align-items: center;
+	@media (max-width: 1023px) {
+		display: none;	
+	}
+}
+.future__knowMoreBox { 		
+	width: 160px;			
+	height: 40px;			
+	display: inline-flex;	
+	align-items: center;
+	margin: 0 26px 0 0;
+}
+.future__knowMore {
+	text-decoration: none;
+	color: #FFFFFF;
+	display: inline-flex;
+	align-items:  center;
+}
+.future__knowMoreText {
+	padding-left: 8px; 
+	font-size: 13px;
+	line-height: 16px;
+	font-family: MontserratBold;
+}
+.future__redButton {
+	text-decoration: none;
+	color: #FFFFFF;
+	display: inline-flex;
+	align-items: center;
+	height: 36px;
+	width: 158px;
+	justify-content: center;
+	border: 2px solid #FFFFFF;
+	font-size: 13px;
+	line-height: 16px;
+	font-family: MontserratBold;
+}
